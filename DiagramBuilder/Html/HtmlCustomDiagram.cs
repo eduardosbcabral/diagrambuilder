@@ -37,21 +37,21 @@ namespace DiagramBuilder.Html
 
     public class HtmlClassDiagram
     {
-        public HtmlClassDiagram(string title, object entitie)
+        public HtmlClassDiagram(string title, object entity)
         {
             Id = UniqueIdentifier.Create("json_");
             Title = title;
-            Entitie = entitie;
+            Entity = entity;
         }
 
-        public HtmlClassDiagram(string title, object entitie, string description) : this(title, entitie)
+        public HtmlClassDiagram(string title, object entity, string description) : this(title, entity)
         {
             Description = description;
         }
 
         public string Id { get; private set; }
         public string Title { get; private set; }
-        public object Entitie { get; private set; }
+        public object Entity { get; private set; }
         public string Description { get; private set; }
     }
 }

@@ -21,6 +21,8 @@ namespace DiagramBuilder.Flowcharts
             Connections = new List<(Node, NodeLink)>();
         }
 
+        public void SetName(string name) => Name = name;
+
         public Flowchart(string name, FlowchartOrientation orientation) : this(name)
         {
             Orientation = orientation;

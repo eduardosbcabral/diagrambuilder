@@ -33,7 +33,7 @@
                 case NodeShapes.StadiumShaped: return "#ID#([#TEXT#])";
                 case NodeShapes.RectangularWithBorder: return "#ID#[[#TEXT#]]";
                 case NodeShapes.Cylindrical: return "#ID#[(#TEXT#)]";
-                case NodeShapes.Circle: return "#ID#((TEXT#))";
+                case NodeShapes.Circle: return "#ID#((#TEXT#))";
                 case NodeShapes.Asymmetric: return "#ID#>#TEXT#]";
                 case NodeShapes.Rhombus: return "#ID#{#TEXT#}";
                 case NodeShapes.Hexagon: return "#ID#{{#TEXT#}}";

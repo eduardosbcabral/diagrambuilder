@@ -88,7 +88,7 @@ namespace DiagramBuilder.Html
 
         private string BuildClassJsonScript(HtmlClassDiagram classDiagram)
         {
-            var serialized = classDiagram.Entitie.GetType().GetClassStructure(new SnakeCaseNamingStrategy());
+            var serialized = classDiagram.Entity.GetType().GetClassStructure(new SnakeCaseNamingStrategy());
             return $@"$('#{classDiagram.Id}').jsonViewer({serialized}, {{collapsed: true, rootCollapsable: false, withQuotes: true, withLinks: false}});";
         }
 
@@ -172,6 +172,8 @@ namespace DiagramBuilder.Html
         /// <param name="path"></param>
         public void BuildDocumentation(string path, params HtmlCustomDiagram[] customs)
         {
+            Directory.CreateDirectory(path);
+
             var resources = LoadBaseResources();
 
             var template = HelperBuilder.LoadResourceString($"{ResourceBasePath}documentation.html")
