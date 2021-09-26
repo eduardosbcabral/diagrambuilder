@@ -13,6 +13,7 @@ namespace DiagramBuilder.Html
         private const string ResourceBasePath = "DiagramBuilder.Html.data.";
         private readonly StringBuilder Menu;
         private readonly StringBuilder Scripts;
+        private string _applicationName;
 
         public HtmlBuilder()
         {
@@ -53,10 +54,10 @@ namespace DiagramBuilder.Html
             var posDiagram = new StringBuilder();
             custom.ClassesPosDiagram.ForEach(c => posDiagram.AppendLine(BuildClassDiagram(c)));
 
-            var html = $@"<section class=""docs-section"" id=""{id}"">
-                            <h2 class=""section-heading"">{name}</h2>
+            var html = $@"<section class=""pt-10"" id=""{id}"">
+                            <p class=""text-4xl font-bold"">{name}</p>
                             {preDiagram}
-                            <div class=""mermaid"">
+                            <div class=""mermaid flex justify-center pt-5 pb-5"">
                                 {custom.Diagram.Compile()}
                             </div>
                             {posDiagram}
@@ -69,28 +70,30 @@ namespace DiagramBuilder.Html
 
         private string BuildClassDiagram(HtmlClassDiagram classDiagram)
         {
-            var html = $@"<h5>{classDiagram.Title}</h5>";
+            var html = $@"<p class=""pt-2 text-xl font-bold"">{classDiagram.Title}</p>";
 
             if (string.IsNullOrWhiteSpace(classDiagram.Description) == false)
                 html += $@"<p>{classDiagram.Description}</p>";
 
-            html += $@"<pre id=""{classDiagram.Id}"" class=""docs-code-block""></pre>";
+            html += $@"<pre id=""{classDiagram.Id}"" class=""prettyprint"" style=""background-color: #f8f8f8;border: none;padding: 1em 2em;"">{BuildClassJsonScript(classDiagram)}</pre>";
 
-            Scripts.AppendLine(BuildClassJsonScript(classDiagram));
+            Scripts.AppendLine();
 
             return html;
         }
 
         private string BuildMenu(string id, string name)
-        {
-            return $@"<li class=""nav-item""><a class=""nav-link scrollto"" href=""#{id}"">{name}</a></li>";
-        }
+            => $@"
+                <li class=""text-left"">
+                    <a class=""block px-4 py-2 mt-2 text-md font-semibold text-gray-700 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"" 
+                        href=""#{id}"">
+                        {name}
+                    </a>
+                </li>
+            ";        
 
         private string BuildClassJsonScript(HtmlClassDiagram classDiagram)
-        {
-            var serialized = classDiagram.Entity.GetType().GetClassStructure(new SnakeCaseNamingStrategy());
-            return $@"$('#{classDiagram.Id}').jsonViewer({serialized}, {{collapsed: true, rootCollapsable: false, withQuotes: true, withLinks: false}});";
-        }
+            => classDiagram.Entity.GetType().GetClassStructure(new SnakeCaseNamingStrategy());
 
         /// <summary>
         /// Build the diagrams as HTML
@@ -125,53 +128,20 @@ namespace DiagramBuilder.Html
         private Queue<HtmlResource> LoadBaseResources()
         {
             var resources = new Queue<HtmlResource>();
-
-            resources.Enqueue(new HtmlResource("assets/css/theme.css", HelperBuilder.LoadResource($"{ResourceBasePath}assets.css.theme.css")));
-            resources.Enqueue(new HtmlResource("assets/css/jquery.json-viewer.css", HelperBuilder.LoadResource($"{ResourceBasePath}assets.css.jquery.json-viewer.css")));
-
-            resources.Enqueue(new HtmlResource("assets/images/coderdocs-logo.svg", HelperBuilder.LoadResource($"{ResourceBasePath}assets.images.coderdocs-logo.svg")));
-
-            resources.Enqueue(new HtmlResource("assets/js/docs.js", HelperBuilder.LoadResource($"{ResourceBasePath}assets.js.docs.js")));
-            resources.Enqueue(new HtmlResource("assets/js/jquery.json-viewer.js", HelperBuilder.LoadResource($"{ResourceBasePath}assets.js.jquery.json-viewer.js")));
-            resources.Enqueue(new HtmlResource("assets/fontawesome/js/all.min.js", HelperBuilder.LoadResource($"{ResourceBasePath}assets.fontawesome.js.all.min.js")));
-            resources.Enqueue(new HtmlResource("assets/plugins/jquery-3.4.1.min.js", HelperBuilder.LoadResource($"{ResourceBasePath}assets.plugins.jquery-3.4.1.min.js")));
-            resources.Enqueue(new HtmlResource("assets/plugins/jquery.scrollTo.min.js", HelperBuilder.LoadResource($"{ResourceBasePath}assets.plugins.jquery.scrollTo.min.js")));
-            resources.Enqueue(new HtmlResource("assets/plugins/popper.min.js", HelperBuilder.LoadResource($"{ResourceBasePath}assets.plugins.popper.min.js")));
-            resources.Enqueue(new HtmlResource("assets/plugins/bootstrap/js/bootstrap.min.js", HelperBuilder.LoadResource($"{ResourceBasePath}assets.plugins.bootstrap.js.bootstrap.min.js")));
-
+            resources.Enqueue(new HtmlResource("assets/images/logo-full.svg", HelperBuilder.LoadResource($"{ResourceBasePath}assets.images.logo-full.svg")));
             return resources;
         }
 
-        /// <summary>
-        /// Build the documentação e generate a file HTML on specify path
-        /// </summary>
-        /// <param name="diagrams"></param>
-        /// <param name="path"></param>
-        public void BuildDocumentation(string path, params IDiagram[] diagrams)
-        {
-            var resources = LoadBaseResources();
-
-            var template = HelperBuilder.LoadResourceString($"{ResourceBasePath}documentation.html")
-                                            .Replace("##BODY##", Build(diagrams))
-                                            .Replace("##DATE##", DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
-                                            .Replace("##MENU##", Menu.ToString())
-                                            .Replace("##SCRIPTS##", Scripts.ToString());
-
-            var htmlStream = new MemoryStream(Encoding.ASCII.GetBytes(template));
-
-            HelperBuilder.SaveStream(htmlStream, $"{path}/index.html");
-
-            foreach (var resource in resources)
-                HelperBuilder.SaveStream(resource.Stream, $"{path}/{resource.Path}");
-        }
 
         /// <summary>
         /// Build the documentação e generate a file HTML on specify path
         /// </summary>
         /// <param name="diagrams"></param>
+        /// <param name="applicationName"></param>
         /// <param name="path"></param>
-        public void BuildDocumentation(string path, params HtmlCustomDiagram[] customs)
+        public void BuildDocumentation(string path, string applicationName, params HtmlCustomDiagram[] customs)
         {
+            _applicationName = applicationName;
             Directory.CreateDirectory(path);
 
             var resources = LoadBaseResources();
@@ -180,7 +150,8 @@ namespace DiagramBuilder.Html
                                             .Replace("##BODY##", Build(customs))
                                             .Replace("##DATE##", DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
                                             .Replace("##MENU##", Menu.ToString())
-                                            .Replace("##SCRIPTS##", Scripts.ToString());
+                                            .Replace("##SCRIPTS##", Scripts.ToString())
+                                            .Replace("##APPLICATION_NAME##", _applicationName);
 
             var htmlStream = new MemoryStream(Encoding.UTF8.GetBytes(template));
 

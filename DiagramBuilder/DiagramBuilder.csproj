@@ -2,34 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Yuri Pereira e Eduardo Cabral</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Html\data\assets\css\jquery.json-viewer.css" />
-    <None Remove="Html\data\assets\css\theme.css" />
-    <None Remove="Html\data\assets\fontawesome\js\all.min.js" />
-    <None Remove="Html\data\assets\images\coderdocs-logo.svg" />
-    <None Remove="Html\data\assets\js\docs.js" />
-    <None Remove="Html\data\assets\js\jquery.json-viewer.js" />
-    <None Remove="Html\data\assets\plugins\bootstrap\js\bootstrap.min.js" />
-    <None Remove="Html\data\assets\plugins\jquery-3.4.1.min.js" />
-    <None Remove="Html\data\assets\plugins\jquery.scrollTo.min.js" />
-    <None Remove="Html\data\assets\plugins\popper.min.js" />
-    <None Remove="Html\data\documentation.html" />
+    <None Remove="Html\data\**\*" />
+    <None Remove="Html\data-old\**\*" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Html\data\assets\css\jquery.json-viewer.css" />
-    <EmbeddedResource Include="Html\data\assets\css\theme.css" />
-    <EmbeddedResource Include="Html\data\assets\fontawesome\js\all.min.js" />
-    <EmbeddedResource Include="Html\data\assets\images\coderdocs-logo.svg" />
-    <EmbeddedResource Include="Html\data\assets\js\docs.js" />
-    <EmbeddedResource Include="Html\data\assets\js\jquery.json-viewer.js" />
-    <EmbeddedResource Include="Html\data\assets\plugins\bootstrap\js\bootstrap.min.js" />
-    <EmbeddedResource Include="Html\data\assets\plugins\jquery-3.4.1.min.js" />
-    <EmbeddedResource Include="Html\data\assets\plugins\jquery.scrollTo.min.js" />
-    <EmbeddedResource Include="Html\data\assets\plugins\popper.min.js" />
-    <EmbeddedResource Include="Html\data\documentation.html" />
+    <EmbeddedResource Include="Html\data\**\*" />
   </ItemGroup>
 
   <ItemGroup>
