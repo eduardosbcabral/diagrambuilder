@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DiagramBuilder.SequenceDiagrams
 {
-    public class ActorLink
+    internal class ActorLink
     {
         public Actor OriginActor { get; set; }
         public Actor DestinationActor { get; set; }

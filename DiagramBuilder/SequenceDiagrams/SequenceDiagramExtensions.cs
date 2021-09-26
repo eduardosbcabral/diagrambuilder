@@ -1,6 +1,6 @@
 ﻿namespace DiagramBuilder.SequenceDiagrams
 {
-    public static class SequenceDiagramExtensions
+    internal static class SequenceDiagramExtensions
     {
         public static ActorLink BuildReply(this ActorLink link, string message)
         {

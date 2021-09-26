@@ -1,6 +1,6 @@
 ﻿namespace DiagramBuilder.SequenceDiagrams
 {
-    public enum ActorLinkType
+    internal enum ActorLinkType
     {
         Line,
         LineArrow,

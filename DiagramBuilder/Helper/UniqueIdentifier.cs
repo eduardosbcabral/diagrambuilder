@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DiagramBuilder.Helper
 {
-    public static class UniqueIdentifier
+    internal static class UniqueIdentifier
     {
         private static readonly string _digits = "0123456789";
         private static readonly string _lowerCaseCharacters = "abcdefghijklmnopqrstuvwxyz";

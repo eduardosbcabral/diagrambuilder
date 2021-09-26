@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DiagramBuilder.SequenceDiagrams
 {
-    public class SequenceDiagram : IDiagram
+    internal class SequenceDiagram : IDiagram
     {
         public string Name { get; set; }
         public bool Autonumber { get; set; }

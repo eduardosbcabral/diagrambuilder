@@ -1,13 +1,13 @@
 ﻿namespace DiagramBuilder.Flowcharts
 {
-    public static class FlowchartExtensions
+    internal static class FlowchartExtensions
     {
         /// <summary>
         /// Define the flowchart orientation
         /// </summary>
         /// <param name="orientation"></param>
         /// <returns>Return the graph orientation</returns>
-        public static string Compile(this FlowchartOrientation orientation)
+        internal static string Compile(this FlowchartOrientation orientation)
         {
             switch (orientation)
             {
@@ -24,7 +24,7 @@
         /// </summary>
         /// <param name="nodeShapes"></param>
         /// <returns>Return struct of node based on shape</returns>
-        public static string Compile(this NodeShapes nodeShapes)
+        internal static string Compile(this NodeShapes nodeShapes)
         {
             switch (nodeShapes)
             {
@@ -50,7 +50,7 @@
         /// </summary>
         /// <param name="linkType"></param>
         /// <returns>Return the link type</returns>
-        public static string Compile(this NodeLinkType linkType)
+        internal static string Compile(this NodeLinkType linkType)
         {
             switch (linkType)
             {

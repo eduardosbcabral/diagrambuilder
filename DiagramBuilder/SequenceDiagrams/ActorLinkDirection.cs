@@ -1,6 +1,6 @@
 ﻿namespace DiagramBuilder.SequenceDiagrams
 {
-    public enum ActorLinkDirection
+    internal enum ActorLinkDirection
     {
         Send,
         Reply

@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace DiagramBuilder.Helper
 {
-    public static class HelperBuilder
+    internal static class HelperBuilder
     {
         public static Stream LoadResource(string resourceName)
         {
