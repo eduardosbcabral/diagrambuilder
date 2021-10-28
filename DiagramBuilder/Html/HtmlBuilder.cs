@@ -1,6 +1,4 @@
-﻿using ClassStructureJson;
-using DiagramBuilder.Helper;
-using Newtonsoft.Json.Serialization;
+﻿using DiagramBuilder.Helper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -93,8 +91,7 @@ namespace DiagramBuilder.Html
             ";        
 
         private string BuildClassJsonScript(HtmlClassDiagram classDiagram)
-            => classDiagram.Entity.GetType().GetClassStructure(new SnakeCaseNamingStrategy());
-
+            => JsonHelper.GetClassStructure(classDiagram.Entity.GetType());
         /// <summary>
         /// Build the diagrams as HTML
         /// </summary>
