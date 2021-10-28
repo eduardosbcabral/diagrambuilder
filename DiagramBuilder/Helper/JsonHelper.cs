@@ -26,7 +26,7 @@ namespace DiagramBuilder.Helper
 
             settings.Converters.Add(new ClassStructureSerialize());
 
-            return JsonConvert.SerializeObject(instance, settings);
+            return JsonConvert.SerializeObject(instance, Formatting.Indented, settings);
         }
 
         public class AvoidNullContractResolver : DefaultContractResolver
